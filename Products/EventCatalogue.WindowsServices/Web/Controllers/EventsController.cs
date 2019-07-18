@@ -22,7 +22,7 @@ namespace EventCatalogue.Web.Controllers
         protected override void Initialize(HttpControllerContext controllerContext)
         {
             base.Initialize(controllerContext);
-            EventCatalogueManager.Start();
+            
             EventCatalogueManager.AddEvent(new EventInfo() { Id = Guid.NewGuid(), Location = "TestLocation", DateCreated = DateTime.Now, Description = "TestDescription" });
         }
 

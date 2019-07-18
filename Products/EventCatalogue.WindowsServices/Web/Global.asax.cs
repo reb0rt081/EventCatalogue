@@ -1,4 +1,5 @@
 ﻿using EventCatalogue.Application;
+using EventCatalogue.Web.App_Start;
 using EventCatalogue.Web.Controllers;
 using EventCatelogue.Domain;
 using Microsoft.Practices.Unity;
@@ -19,6 +20,7 @@ namespace Web
 {
     public class WebApiApplication : HttpApplication
     {
+        private IUnityContainer container;
         public void Start()
         {
             Application_Start();
@@ -31,15 +33,39 @@ namespace Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerActivator), new CustomControllerActivator());
+            WebLoader();
         }
 
-    }
-    public class CustomControllerActivator : IHttpControllerActivator
-    {
-        public IHttpController Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType)
+        protected void WebLoader()
         {
-            return new EventsController(new EventCatalogueManager());
+            #region Create container and register services
+
+            container = new UnityContainer();
+            container.RegisterInstance(container);
+
+            EventCatalogueManager eventManager = new EventCatalogueManager();
+            container.RegisterInstance<IEventManager>(eventManager);
+            
+            EventsControllerActivator eventsControllerActivator = new EventsControllerActivator(eventManager);
+            container.RegisterInstance<IHttpControllerActivator>(eventsControllerActivator);
+
+            #endregion
+
+            #region Build up services
+
+            container.BuildUp(eventManager);
+            container.BuildUp(eventsControllerActivator);
+
+            GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerActivator), eventsControllerActivator);
+
+            #endregion
+
+            #region Start services
+
+            eventManager.Start();
+
+            #endregion
         }
-    }
+
+    }    
 }
