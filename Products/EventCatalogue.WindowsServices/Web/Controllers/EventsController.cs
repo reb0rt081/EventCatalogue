@@ -1,5 +1,7 @@
 ﻿using EventCatalogue.Application;
 using EventCatalogue.Shared.Classes;
+using EventCatelogue.Domain;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +14,9 @@ namespace EventCatalogue.Web.Controllers
 {
     public class EventsController : ApiController
     {
-        public EventCatalogueManager EventCatalogueManager { get; set; }
+        [Dependency]
+        public IEventManager EventCatalogueManager { get; set; }
 
-        public EventsController(EventCatalogueManager catalogueManager)
-        {
-            EventCatalogueManager = catalogueManager;
-        }
 
         protected override void Initialize(HttpControllerContext controllerContext)
         {

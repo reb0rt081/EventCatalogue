@@ -46,7 +46,7 @@ namespace Web
             EventCatalogueManager eventManager = new EventCatalogueManager();
             container.RegisterInstance<IEventManager>(eventManager);
             
-            EventsControllerActivator eventsControllerActivator = new EventsControllerActivator(eventManager);
+            EventsControllerActivator eventsControllerActivator = new EventsControllerActivator();
             container.RegisterInstance<IHttpControllerActivator>(eventsControllerActivator);
 
             #endregion

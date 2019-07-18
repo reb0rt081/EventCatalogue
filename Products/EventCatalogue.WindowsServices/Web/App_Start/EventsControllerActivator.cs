@@ -1,5 +1,7 @@
 ﻿using EventCatalogue.Application;
 using EventCatalogue.Web.Controllers;
+using EventCatelogue.Domain;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +14,25 @@ namespace EventCatalogue.Web.App_Start
 {
     public class EventsControllerActivator : IHttpControllerActivator
     {
-        public EventCatalogueManager CatalogueManager { get;}
-        public EventsControllerActivator(EventCatalogueManager eventManager)
+        [Dependency]
+        public IUnityContainer Container { get; set; }
+
+        [Dependency]
+        public IEventManager CatalogueManager { get; set; }
+
+        public EventsController EventController { get; set; }
+
+        [InjectionMethod]
+        public void Initialize()
         {
-            CatalogueManager = eventManager;
+            EventController = new EventsController();
+            Container.RegisterInstance(EventController);
+            Container.BuildUp(EventController);
         }
+
         public IHttpController Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType)
         {
-            return new EventsController(CatalogueManager);
+            return EventController;
         }
     }
 }
