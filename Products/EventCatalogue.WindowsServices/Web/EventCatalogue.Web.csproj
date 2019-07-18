@@ -47,6 +47,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.Unity, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -282,6 +286,10 @@
     <ProjectReference Include="..\Application\EventCatalogue.Application.csproj">
       <Project>{03C663D5-E4CF-42F6-9DFF-E44E767ADFFF}</Project>
       <Name>EventCatalogue.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\EventCatalogue.Domain.csproj">
+      <Project>{FCE3EAFD-8B86-41EE-9293-97CB55750D8F}</Project>
+      <Name>EventCatalogue.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared\EventCatalogue.Shared.csproj">
       <Project>{3F0F7CCA-9B2B-4D3C-8AC3-279070DE7E0B}</Project>

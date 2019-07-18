@@ -12,25 +12,42 @@ namespace EventCatalogue.Web.Controllers
 {
     public class EventsController : ApiController
     {
-        public EventCatalogueManager EventCatalogueManager {get; set;}
+        public EventCatalogueManager EventCatalogueManager { get; set; }
+
+        public EventsController(EventCatalogueManager catalogueManager)
+        {
+            EventCatalogueManager = catalogueManager;
+        }
 
         protected override void Initialize(HttpControllerContext controllerContext)
         {
             base.Initialize(controllerContext);
-
             EventCatalogueManager.Start();
+            EventCatalogueManager.AddEvent(new EventInfo() { Id = Guid.NewGuid(), Location = "TestLocation", DateCreated = DateTime.Now, Description = "TestDescription" });
         }
 
         // GET: api/Events
-        public IEnumerable<EventInfo> Get()
+        public IEnumerable<EventInfo> Get(int maxItems)
         {
-            return EventCatalogueManager.FindEvents(null, null, false);
+            return EventCatalogueManager.FindEvents(null, null, false).Take(maxItems);
         }
 
-        // GET: api/Events/5
-        public EventInfo Get(int id)
+        // GET: api/Events/location
+        public IEnumerable<EventInfo> Get(string location, int maxItems)
         {
-            return EventCatalogueManager.FindEvents(null, null, false).FirstOrDefault();
+            return EventCatalogueManager.FindEvents(location, null, false).Take(maxItems).ToList();
+        }
+
+        // GET: api/Events/date
+        public IEnumerable<EventInfo> Get(DateTime date, int maxItems)
+        {
+            return EventCatalogueManager.FindEvents(null, date, false).Take(maxItems).ToList();
+        }
+
+        // GET: api/Events/location&date
+        public IEnumerable<EventInfo> Get(string location, DateTime date, bool applyAnd, int maxItems)
+        {
+            return EventCatalogueManager.FindEvents(location, date, applyAnd).Take(maxItems).ToList();
         }
 
         // POST: api/Events
@@ -42,13 +59,15 @@ namespace EventCatalogue.Web.Controllers
 
         // PUT: api/Events/5
         // update
-        public void Put(int id, [FromBody]EventInfo value)
+        public void Put([FromBody]EventInfo value)
         {
+            EventCatalogueManager.UpdateEvent(value);
         }
 
-        // DELETE: api/Events/5
-        public void Delete(int id)
+        // DELETE: api/Events/guid
+        public void Delete(Guid id)
         {
+            EventCatalogueManager.DeleteEvent(id);
         }
     }
 }
