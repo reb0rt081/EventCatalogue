@@ -19,6 +19,9 @@ namespace EventCatalogue.Test.U
             manager.Start();
         }
 
+        /// <summary>
+        /// This tests ensures that events can be added and then retrieved with full query.
+        /// </summary>
         [TestMethod]
         public void AddAndFilterForEventTest()
         {
@@ -30,6 +33,9 @@ namespace EventCatalogue.Test.U
             Assert.AreEqual(dummyLocation, result.SingleOrDefault().Location);
         }
 
+        /// <summary>
+        /// This tests ensures that events can be added and then retrieved with the location.
+        /// </summary>
         [TestMethod]
         public void AddAndFilterForEventLocationTest()
         {
@@ -41,6 +47,9 @@ namespace EventCatalogue.Test.U
             Assert.AreEqual(dummyLocation, result.SingleOrDefault().Location);
         }
 
+        /// <summary>
+        /// This tests ensures that events can be added and then retrieved with the date.
+        /// </summary>
         [TestMethod]
         public void AddAndFilterForEventDaeTest()
         {
@@ -52,6 +61,9 @@ namespace EventCatalogue.Test.U
             Assert.AreEqual(dummyLocation, result.SingleOrDefault().Location);
         }
 
+        /// <summary>
+        /// This tests ensures that events can be added and then deleted.
+        /// </summary>
         [TestMethod]
         public void AddAndFilterAndDeleteTest()
         {
@@ -67,6 +79,9 @@ namespace EventCatalogue.Test.U
             Assert.IsTrue(!manager.FindEvents(null, dateTime, false).Any());
         }
 
+        /// <summary>
+        /// This tests ensures that events can be added and then updated.
+        /// </summary>
         [TestMethod]
         public void AddAndFilterAnUpdateTest()
         {
