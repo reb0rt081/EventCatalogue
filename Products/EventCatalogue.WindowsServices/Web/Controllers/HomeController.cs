@@ -20,9 +20,9 @@ namespace Web.Controllers
         /// A CSHTML file with the same name must exist in views.
         /// </summary>
         /// <returns></returns>
-        public ActionResult Home()
+        public ActionResult EventsHome()
         {
-            ViewBag.Title = "Home Page";
+            ViewBag.Title = "EventsHome Page";
 
             return View();
         }
