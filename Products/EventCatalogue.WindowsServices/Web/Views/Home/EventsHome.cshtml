@@ -43,22 +43,12 @@
             return 'Date: ' + item.DateCreated + ' | Location: ' + item.Location + ' | Description: ' + item.Description;
         }
 
-        //function find() {
-        //    var id = $('#eventLocation').val();
-        //    $.getJSON(apiUrl + 'location=' + id + '&maxItems=100')
-        //        .done(function (data) {
-        //            $.each(data, function (key, item) {
-        //                // Add a list item for the product.
-        //                $('<li>', { text: formatItem(item) }).appendTo($('#events'));
-        //            });
-        //        }
-        //        .fail(function (jqXHR, textStatus, err) {
-        //            $('#events').text('Error: ' + err);
-        //        });
-        //}
+        
 
         function find() {
             var id = $('#eventLocation').val();
+
+            $('#events').empty();
 
             $.getJSON(apiUrl + 'location=' + id + '&maxItems=100')
                 .done(function (data) {
