@@ -23,6 +23,7 @@ namespace EventCatalogue.Web.App_Start
         
         public IHttpController Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType)
         {
+            //  Every time this method is called a new instance of the EventsController must be returned
             var eventController = new EventsController(CatalogueManager);
             
             return eventController;
