@@ -13,14 +13,20 @@
     <div>
         <h2>Search by location</h2>
         <input type="text" id="eventLocation" size="5" />
-        <input type="button" value="Search" onclick="find();" />
+        <input type="button" value="Search" onclick="find();" />        
         <p id="product" />
+    </div>
+    <div>
+        <h2>Add Event (location, description)</h2>
+        <input type="text" id="location" size="5" />
+        <input type="text" id="description" size="5" />
+        <input type="button" value="Add" onclick="add();" />
     </div>
 
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script>
         var apiUrl = 'http://localhost:31860/api/Events?';
-        
+
         $(document).ready(function () {
             // Send an AJAX request
             $.getJSON(apiUrl + 'maxItems=100')
@@ -51,8 +57,7 @@
         //        });
         //}
 
-        function find()
-        {
+        function find() {
             var id = $('#eventLocation').val();
 
             $.getJSON(apiUrl + 'location=' + id + '&maxItems=100')
@@ -64,6 +69,21 @@
                     });
                 });
 
+        }
+
+        function add() {
+            var location = $('#location').val();
+            var description = $('#description').val();
+
+            $(function () {
+                var event = { Id: "00000000-0000-0000-0000-000000000000", DateCreated: "2019-07-19T11:01:37.5924672+02:00", Location: location, Description: description };
+                $.ajax({
+                    type: "POST",
+                    data: JSON.stringify(event),
+                    url: "http://localhost:31860/api/Events",
+                    contentType: "application/json"
+                });
+            });
         }
 
     </script>
