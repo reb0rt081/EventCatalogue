@@ -20,19 +20,12 @@ namespace EventCatalogue.Web.App_Start
         [Dependency]
         public IEventManager CatalogueManager { get; set; }
 
-        public EventsController EventController { get; set; }
-
-        [InjectionMethod]
-        public void Initialize()
-        {
-            EventController = new EventsController();
-            Container.RegisterInstance(EventController);
-            Container.BuildUp(EventController);
-        }
-
+        
         public IHttpController Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType)
         {
-            return EventController;
+            var eventController = new EventsController(CatalogueManager);
+            
+            return eventController;
         }
     }
 }

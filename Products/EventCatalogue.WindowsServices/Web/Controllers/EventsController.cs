@@ -17,6 +17,10 @@ namespace EventCatalogue.Web.Controllers
         [Dependency]
         public IEventManager EventCatalogueManager { get; set; }
 
+        public EventsController(IEventManager eventCatalogueManager)
+        {
+            EventCatalogueManager = eventCatalogueManager;
+        }
 
         protected override void Initialize(HttpControllerContext controllerContext)
         {

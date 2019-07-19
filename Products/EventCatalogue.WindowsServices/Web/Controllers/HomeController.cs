@@ -14,5 +14,17 @@ namespace Web.Controllers
 
             return View();
         }
+
+        /// <summary>
+        /// All web pages are created here.
+        /// A CSHTML file with the same name must exist in views.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Home()
+        {
+            ViewBag.Title = "Home Page";
+
+            return View();
+        }
     }
 }

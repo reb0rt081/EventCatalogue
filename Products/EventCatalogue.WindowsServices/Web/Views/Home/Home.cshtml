@@ -1,0 +1,72 @@
+﻿@model EventCatalogue.Shared.Classes.EventInfo
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Home Roberto</h2>
+<body>
+    <div>
+        <h2>All Events</h2>
+        <ul id="events" />
+    </div>
+    <div>
+        <h2>Search by location</h2>
+        <input type="text" id="eventLocation" size="5" />
+        <input type="button" value="Search" onclick="find();" />
+        <p id="product" />
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
+        var apiUrl = 'http://localhost:31860/api/Events?';
+        
+        $(document).ready(function () {
+            // Send an AJAX request
+            $.getJSON(apiUrl + 'maxItems=100')
+                .done(function (data) {
+                    // On success, 'data' contains a list of products.
+                    $.each(data, function (key, item) {
+                        // Add a list item for the product.
+                        $('<li>', { text: formatItem(item) }).appendTo($('#events'));
+                    });
+                });
+        });
+
+        function formatItem(item) {
+            return 'Date: ' + item.DateCreated + ' | Location: ' + item.Location + ' | Description: ' + item.Description;
+        }
+
+        //function find() {
+        //    var id = $('#eventLocation').val();
+        //    $.getJSON(apiUrl + 'location=' + id + '&maxItems=100')
+        //        .done(function (data) {
+        //            $.each(data, function (key, item) {
+        //                // Add a list item for the product.
+        //                $('<li>', { text: formatItem(item) }).appendTo($('#events'));
+        //            });
+        //        }
+        //        .fail(function (jqXHR, textStatus, err) {
+        //            $('#events').text('Error: ' + err);
+        //        });
+        //}
+
+        function find()
+        {
+            var id = $('#eventLocation').val();
+
+            $.getJSON(apiUrl + 'location=' + id + '&maxItems=100')
+                .done(function (data) {
+                    // On success, 'data' contains a list of products.
+                    $.each(data, function (key, item) {
+                        // Add a list item for the product.
+                        $('<li>', { text: formatItem(item) }).appendTo($('#events'));
+                    });
+                });
+
+        }
+
+    </script>
+
+</body>
+
