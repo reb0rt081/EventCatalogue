@@ -3,3 +3,6 @@ debug/
 obj/
 release/
 .cache
+.vs/
+.suo
+/packages
